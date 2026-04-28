@@ -1,13 +1,85 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> Spring Boot </title>
-    <link rel="stylesheet" href="/css/styles.css"/>
+    <meta charset="utf-8"/>
+    <title>Poseiden Home</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<h3> HOME PAGE </h3>
-<p>
-    <a href="/login">Login</a> or create one <a href="/user/list">User management</a>
-</p>
+
+<div class="container mt-5">
+
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Poseiden Financial App</h1>
+            <p class="text-muted">
+                Manage financial entities from the application dashboard.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-3">
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Bid List</h5>
+                <p>Manage bid offers.</p>
+                <a href="/bidList/list" class="btn btn-primary btn-sm">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Curve Point</h5>
+                <p>Manage financial curve points.</p>
+                <a href="/curvePoint/list" class="btn btn-primary btn-sm">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Rating</h5>
+                <p>Manage financial ratings.</p>
+                <a href="/rating/list" class="btn btn-primary btn-sm">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Rule Name</h5>
+                <p>Manage business rules.</p>
+                <a href="/ruleName/list" class="btn btn-primary btn-sm">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Trade</h5>
+                <p>Manage financial trades.</p>
+                <a href="/trade/list" class="btn btn-primary btn-sm">Open</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>User</h5>
+                <p>Manage application users.</p>
+                <a href="/user/list" class="btn btn-primary btn-sm">Open</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <form th:action="@{/app/logout}" method="post">
+                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>
