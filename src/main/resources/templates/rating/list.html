@@ -1,45 +1,66 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
 	<meta charset="utf-8"/>
 	<title>Rating List</title>
-	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
+
 <body>
-<div class="container">
-	<div class="row">
-		<h2>Rating List</h2>
+<div class="container mt-4">
+
+	<div class="row mb-4">
+		<div class="col-6">
+			<a href="/bidList/list">Bid List</a> |
+			<a href="/curvePoint/list">Curve Points</a> |
+			<a href="/rating/list">Ratings</a> |
+			<a href="/trade/list">Trade</a> |
+			<a href="/ruleName/list">Rule</a>
+		</div>
+
+		<div class="col-6 text-end">
+			<span>Logged in user: <strong sec:authentication="name">admin</strong></span>
+			<form th:action="@{/app/logout}" method="post" style="display:inline;">
+				<button type="submit" class="btn btn-light btn-sm border">Logout</button>
+			</form>
+		</div>
 	</div>
 
-	<div class="row">
-		<a href="/rating/add" class="btn btn-primary btn-sm mb-3">Add New</a>
-		<table class="table table-bordered table-striped">
-			<thead>
-			<tr>
-				<th>Id</th>
-				<th>Moodys Rating</th>
-				<th>S&amp;P Rating</th>
-				<th>Fitch Rating</th>
-				<th>Order Number</th>
-				<th>Action</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr th:each="rating : ${ratings}">
-				<td th:text="${rating.id}"></td>
-				<td th:text="${rating.moodysRating}"></td>
-				<td th:text="${rating.sandPRating}"></td>
-				<td th:text="${rating.fitchRating}"></td>
-				<td th:text="${rating.orderNumber}"></td>
-				<td>
-					<a th:href="@{/rating/update/{id}(id=${rating.id})}">Edit</a>
-					<a th:href="@{/rating/delete/{id}(id=${rating.id})}">Delete</a>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
+	<h2>Rating List</h2>
+
+	<a href="/rating/add" class="btn btn-primary btn-sm mb-2">Add New</a>
+
+	<table class="table table-bordered">
+		<thead>
+		<tr>
+			<th>Id</th>
+			<th>Moody's Rating</th>
+			<th>S&amp;P Rating</th>
+			<th>Fitch Rating</th>
+			<th>Order Number</th>
+			<th>Action</th>
+		</tr>
+		</thead>
+
+		<tbody>
+		<tr th:each="rating : ${ratings}">
+			<td th:text="${rating.id}"></td>
+			<td th:text="${rating.moodysRating}"></td>
+			<td th:text="${rating.sandPRating}"></td>
+			<td th:text="${rating.fitchRating}"></td>
+			<td th:text="${rating.orderNumber}"></td>
+			<td>
+				<a th:href="@{/rating/update/{id}(id=${rating.id})}">Edit</a>
+				|
+				<a th:href="@{/rating/delete/{id}(id=${rating.id})}">Delete</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+
 </div>
 </body>
 </html>

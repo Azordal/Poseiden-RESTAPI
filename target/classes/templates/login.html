@@ -1,52 +1,158 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8"/>
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+        body {
+            background-color: white;
+            min-height: 100vh;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-title {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 38px;
+            color: #444;
+            font-weight: 400;
+        }
+
+        .login-container {
+            width: 420px;
+            margin: 110px auto 0 auto;
+        }
+
+        .login-container h2 {
+            font-family: "Times New Roman", serif;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #111;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .form-row label {
+            width: 90px;
+            font-family: "Times New Roman", serif;
+            font-size: 20px;
+            color: #222;
+        }
+
+        .form-row input {
+            width: 220px;
+            height: 28px;
+            border: 1px solid #aaa;
+            font-size: 16px;
+            padding-left: 4px;
+        }
+
+        .login-button {
+            margin-left: 0;
+            margin-top: 5px;
+            font-family: "Times New Roman", serif;
+            font-size: 16px;
+            padding: 3px 10px;
+            border: 1px solid #888;
+            background-color: #eee;
+            color: black;
+        }
+
+        .login-button:hover {
+            background-color: #ddd;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .logo-container {
+            position: absolute;
+            right: 35px;
+            bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-shape {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo-bar {
+            width: 24px;
+            height: 55px;
+            border: 6px solid #1f7eea;
+            transform: skewX(-30deg);
+            background-color: white;
+        }
+
+        .logo-text {
+            color: #0050a8;
+            font-size: 20px;
+            line-height: 1.2;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
+<h1 class="login-title">Login Screen</h1>
 
-            <div class="card shadow-sm">
-                <div class="card-body">
+<div class="login-container">
 
-                    <h2 class="mb-4 text-center">Login</h2>
+    <h2>Login with Username and Password</h2>
 
-                    <div th:if="${param.error}" class="alert alert-danger">
-                        Invalid username or password.
-                    </div>
+    <div th:if="${param.error}" class="text-danger message">
+        Invalid username or password.
+    </div>
 
-                    <div th:if="${param.logout}" class="alert alert-success">
-                        You have been logged out.
-                    </div>
+    <div th:if="${param.logout}" class="text-success message">
+        You have been logged out.
+    </div>
 
-                    <form th:action="@{/app/login}" method="post">
+    <form th:action="@{/app/login}" method="post">
 
-                        <div class="mb-3">
-                            <label class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100">
-                            Sign in
-                        </button>
-
-                    </form>
-
-                </div>
-            </div>
-
+        <div class="form-row">
+            <label for="username">User:</label>
+            <input id="username" type="text" name="username">
         </div>
+
+        <div class="form-row">
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password">
+        </div>
+
+        <button type="submit" class="login-button">Login</button>
+
+    </form>
+
+</div>
+
+<div class="logo-container">
+    <div class="logo-shape">
+        <div class="logo-bar"></div>
+        <div class="logo-bar"></div>
+        <div class="logo-bar"></div>
+    </div>
+
+    <div class="logo-text">
+        Poseidon<br>
+        Capital<br>
+        Solutions
     </div>
 </div>
 
