@@ -2,17 +2,12 @@ package com.nnk.springboot;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class RatingTests {
 
@@ -21,26 +16,39 @@ public class RatingTests {
 
 	@Test
 	public void ratingTest() {
-		Rating rating = new Rating("Moodys Rating", "Sand PRating", "Fitch Rating", 10);
+
+		Rating rating = new Rating();
+		rating.setMoodysRating("Aaa");
+		rating.setSandPRating("AAA");
+		rating.setFitchRating("AAA");
+		rating.setOrderNumber(1);
 
 		// Save
 		rating = ratingRepository.save(rating);
-		Assert.assertNotNull(rating.getId());
-		Assert.assertTrue(rating.getOrderNumber() == 10);
 
-		// Update
-		rating.setOrderNumber(20);
-		rating = ratingRepository.save(rating);
-		Assert.assertTrue(rating.getOrderNumber() == 20);
+		assertNotNull(rating.getId());
+		assertEquals(1, rating.getOrderNumber());
 
 		// Find
-		List<Rating> listResult = ratingRepository.findAll();
-		Assert.assertTrue(listResult.size() > 0);
+		Rating foundRating = ratingRepository.findById(rating.getId()).orElse(null);
+
+		assertNotNull(foundRating);
+		assertEquals(rating.getId(), foundRating.getId());
+
+		// Update
+		foundRating.setOrderNumber(2);
+
+		ratingRepository.save(foundRating);
+
+		Rating updatedRating = ratingRepository.findById(rating.getId()).orElse(null);
+
+		assertEquals(2, updatedRating.getOrderNumber());
 
 		// Delete
-		Integer id = rating.getId();
-		ratingRepository.delete(rating);
-		Optional<Rating> ratingList = ratingRepository.findById(id);
-		Assert.assertFalse(ratingList.isPresent());
+		Integer id = updatedRating.getId();
+
+		ratingRepository.delete(updatedRating);
+
+		assertFalse(ratingRepository.findById(id).isPresent());
 	}
 }

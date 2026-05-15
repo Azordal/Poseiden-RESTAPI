@@ -2,17 +2,12 @@ package com.nnk.springboot;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class RuleTests {
 
@@ -21,26 +16,41 @@ public class RuleTests {
 
 	@Test
 	public void ruleTest() {
-		RuleName rule = new RuleName("Rule Name", "Description", "Json", "Template", "SQL", "SQL Part");
+
+		RuleName ruleName = new RuleName();
+		ruleName.setName("Rule Test");
+		ruleName.setDescription("Description Test");
+		ruleName.setJson("{}");
+		ruleName.setTemplate("Template Test");
+		ruleName.setSqlStr("SELECT *");
+		ruleName.setSqlPart("WHERE id = 1");
 
 		// Save
-		rule = ruleNameRepository.save(rule);
-		Assert.assertNotNull(rule.getId());
-		Assert.assertTrue(rule.getName().equals("Rule Name"));
+		ruleName = ruleNameRepository.save(ruleName);
 
-		// Update
-		rule.setName("Rule Name Update");
-		rule = ruleNameRepository.save(rule);
-		Assert.assertTrue(rule.getName().equals("Rule Name Update"));
+		assertNotNull(ruleName.getId());
+		assertEquals("Rule Test", ruleName.getName());
 
 		// Find
-		List<RuleName> listResult = ruleNameRepository.findAll();
-		Assert.assertTrue(listResult.size() > 0);
+		RuleName foundRuleName = ruleNameRepository.findById(ruleName.getId()).orElse(null);
+
+		assertNotNull(foundRuleName);
+		assertEquals(ruleName.getId(), foundRuleName.getId());
+
+		// Update
+		foundRuleName.setName("Updated Rule");
+
+		ruleNameRepository.save(foundRuleName);
+
+		RuleName updatedRuleName = ruleNameRepository.findById(ruleName.getId()).orElse(null);
+
+		assertEquals("Updated Rule", updatedRuleName.getName());
 
 		// Delete
-		Integer id = rule.getId();
-		ruleNameRepository.delete(rule);
-		Optional<RuleName> ruleList = ruleNameRepository.findById(id);
-		Assert.assertFalse(ruleList.isPresent());
+		Integer id = updatedRuleName.getId();
+
+		ruleNameRepository.delete(updatedRuleName);
+
+		assertFalse(ruleNameRepository.findById(id).isPresent());
 	}
 }
