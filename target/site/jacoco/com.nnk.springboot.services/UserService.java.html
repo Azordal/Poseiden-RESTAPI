@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseiden-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
+
+import com.nnk.springboot.domain.User;
+import com.nnk.springboot.repositories.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+<span class="fc" id="L14">    public UserService(UserRepository userRepository) {</span>
+<span class="fc" id="L15">        this.userRepository = userRepository;</span>
+<span class="fc" id="L16">    }</span>
+
+    public List&lt;User&gt; findAll() {
+<span class="nc" id="L19">        return userRepository.findAll();</span>
+    }
+
+    public User save(User user) {
+<span class="nc" id="L23">        return userRepository.save(user);</span>
+    }
+
+    public User findById(Integer id) {
+<span class="nc" id="L27">        return userRepository.findById(id)</span>
+<span class="nc" id="L28">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Invalid User Id: &quot; + id));</span>
+    }
+
+    public User update(Integer id, User user) {
+<span class="nc" id="L32">        User existingUser = findById(id);</span>
+
+<span class="nc" id="L34">        existingUser.setUsername(user.getUsername());</span>
+<span class="nc" id="L35">        existingUser.setPassword(user.getPassword());</span>
+<span class="nc" id="L36">        existingUser.setFullname(user.getFullname());</span>
+<span class="nc" id="L37">        existingUser.setRole(user.getRole());</span>
+
+<span class="nc" id="L39">        return userRepository.save(existingUser);</span>
+    }
+
+    public void delete(Integer id) {
+<span class="nc" id="L43">        User user = findById(id);</span>
+<span class="nc" id="L44">        userRepository.delete(user);</span>
+<span class="nc" id="L45">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidListService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseiden-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">BidListService.java</span></div><h1>BidListService.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
+
+import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.repositories.BidListRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class BidListService {
+
+    private final BidListRepository bidListRepository;
+
+<span class="fc" id="L14">    public BidListService(BidListRepository bidListRepository) {</span>
+<span class="fc" id="L15">        this.bidListRepository = bidListRepository;</span>
+<span class="fc" id="L16">    }</span>
+
+    public List&lt;BidList&gt; findAll() {
+<span class="nc" id="L19">        return bidListRepository.findAll();</span>
+    }
+
+    public BidList save(BidList bidList) {
+<span class="nc" id="L23">        return bidListRepository.save(bidList);</span>
+    }
+
+    public BidList findById(Integer id) {
+<span class="nc" id="L27">        return bidListRepository.findById(id)</span>
+<span class="nc" id="L28">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Invalid BidList Id: &quot; + id));</span>
+    }
+
+    public BidList update(Integer id, BidList bidList) {
+
+<span class="nc" id="L33">        BidList existingBid = findById(id);</span>
+
+<span class="nc" id="L35">        existingBid.setAccount(bidList.getAccount());</span>
+<span class="nc" id="L36">        existingBid.setType(bidList.getType());</span>
+<span class="nc" id="L37">        existingBid.setBidQuantity(bidList.getBidQuantity());</span>
+
+<span class="nc" id="L39">        return bidListRepository.save(existingBid);</span>
+    }
+
+    public void delete(Integer id) {
+<span class="nc" id="L43">        BidList bidList = findById(id);</span>
+<span class="nc" id="L44">        bidListRepository.delete(bidList);</span>
+<span class="nc" id="L45">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

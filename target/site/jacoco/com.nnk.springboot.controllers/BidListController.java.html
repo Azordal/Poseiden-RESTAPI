@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidListController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">poseiden-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">BidListController.java</span></div><h1>BidListController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
+
+import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.services.BidListService;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class BidListController {
+
+    private final BidListService bidListService;
+
+<span class="fc" id="L16">    public BidListController(BidListService bidListService) {</span>
+<span class="fc" id="L17">        this.bidListService = bidListService;</span>
+<span class="fc" id="L18">    }</span>
+
+    @RequestMapping(&quot;/bidList/list&quot;)
+    public String home(Model model) {
+
+<span class="nc" id="L23">        model.addAttribute(&quot;bidLists&quot;, bidListService.findAll());</span>
+
+<span class="nc" id="L25">        return &quot;bidList/list&quot;;</span>
+    }
+
+    @GetMapping(&quot;/bidList/add&quot;)
+    public String addBidForm(BidList bidList) {
+
+<span class="fc" id="L31">        return &quot;bidList/add&quot;;</span>
+    }
+
+    @PostMapping(&quot;/bidList/validate&quot;)
+    public String validate(@Valid BidList bidList,
+                           BindingResult result,
+                           Model model) {
+
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (result.hasErrors()) {</span>
+<span class="nc" id="L40">            return &quot;bidList/add&quot;;</span>
+        }
+
+<span class="fc" id="L43">        bidListService.save(bidList);</span>
+
+<span class="fc" id="L45">        model.addAttribute(&quot;bidLists&quot;, bidListService.findAll());</span>
+
+<span class="fc" id="L47">        return &quot;bidList/list&quot;;</span>
+    }
+
+    @GetMapping(&quot;/bidList/update/{id}&quot;)
+    public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id,
+                                 Model model) {
+
+<span class="nc" id="L54">        model.addAttribute(&quot;bidList&quot;,</span>
+<span class="nc" id="L55">                bidListService.findById(id));</span>
+
+<span class="nc" id="L57">        return &quot;bidList/update&quot;;</span>
+    }
+
+    @PostMapping(&quot;/bidList/update/{id}&quot;)
+    public String updateBid(@PathVariable(&quot;id&quot;) Integer id,
+                            @Valid BidList bidList,
+                            BindingResult result,
+                            Model model) {
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (result.hasErrors()) {</span>
+<span class="nc" id="L67">            return &quot;bidList/update&quot;;</span>
+        }
+
+<span class="nc" id="L70">        bidListService.update(id, bidList);</span>
+
+<span class="nc" id="L72">        model.addAttribute(&quot;bidLists&quot;,</span>
+<span class="nc" id="L73">                bidListService.findAll());</span>
+
+<span class="nc" id="L75">        return &quot;bidList/list&quot;;</span>
+    }
+
+    @GetMapping(&quot;/bidList/delete/{id}&quot;)
+    public String deleteBid(@PathVariable(&quot;id&quot;) Integer id,
+                            Model model) {
+
+<span class="nc" id="L82">        bidListService.delete(id);</span>
+
+<span class="nc" id="L84">        model.addAttribute(&quot;bidLists&quot;,</span>
+<span class="nc" id="L85">                bidListService.findAll());</span>
+
+<span class="nc" id="L87">        return &quot;bidList/list&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
